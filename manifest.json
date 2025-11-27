@@ -1,6 +1,6 @@
 {
-    "name": "My Awesome App",
-    "short_name": "MyApp",
+    "name": "Attendance Management System",
+    "short_name": "AMS",
     "start_url": "./index.html",
     "display": "standalone",
     "background_color": "#ffffff",
