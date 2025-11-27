@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Present Sir</title>
+    <title>AMS</title>
     
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
@@ -407,7 +407,7 @@
     <div id="modalOverlay" class="fixed inset-0 bg-black/60 z-[60] hidden flex items-center justify-center p-4 backdrop-blur-sm no-print"><div class="bg-white rounded-xl shadow-2xl w-full max-w-xs p-6 animate-bounce-in"><h3 class="text-lg font-bold text-slate-800 mb-2" id="modalTitle"></h3><p class="text-sm text-slate-600 mb-6 leading-relaxed" id="modalMessage"></p><div class="flex justify-end gap-3"><button onclick="window.closeModal()" class="px-4 py-2 rounded-lg text-slate-500 text-sm font-medium hover:bg-slate-100">Cancel</button><button id="modalConfirmBtn" class="px-4 py-2 rounded-lg bg-blue-600 text-white text-sm font-bold shadow-md">Confirm</button></div></div></div>
 
     <script>
-        const SCHOOL_NAME="N.P.G. College, Barhalganj", ADMIN_PASS="admin123";
+        const SCHOOL_NAME="National P.G. College, Barhalganj Gorakhpur", ADMIN_PASS="admin123";
         // Default classes changed to "1A", "2B" style
         const defaultSettings = { teacherName: "Class Teacher", classes: ["1A"], lastClass: "1A", defaultStatus: "P" };
         let students=[], attendanceData={}, settings=JSON.parse(JSON.stringify(defaultSettings)), currentClass="1A";
