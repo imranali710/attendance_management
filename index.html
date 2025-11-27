@@ -14,6 +14,13 @@
     <!-- Chart.js -->
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     
+    <!-- PWA Manifest -->
+    <link rel="manifest" href="./manifest.json">
+    <meta name="theme-color" content="#4285f4">
+    <meta name="description" content="Attendance Management System">
+    <link rel="icon" type="image/png" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 192 192'><rect fill='%234285f4' width='192' height='192'/><text x='50%' y='50%' font-size='100' font-weight='bold' fill='white' text-anchor='middle' dominant-baseline='middle'>A</text></svg>">
+    <link rel="apple-touch-icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 180 180'><rect fill='%234285f4' width='180' height='180'/><text x='50%' y='50%' font-size='90' font-weight='bold' fill='white' text-anchor='middle' dominant-baseline='middle'>A</text></svg>">
+
     <!-- PapaParse (CSV) -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.3.0/papaparse.min.js"></script>
 
@@ -412,6 +419,30 @@
         const defaultSettings = { teacherName: "Class Teacher", classes: ["1A"], lastClass: "1A", defaultStatus: "P" };
         let students=[], attendanceData={}, settings=JSON.parse(JSON.stringify(defaultSettings)), currentClass="1A";
         let db;
+        let deferredPrompt;
+
+        // Handle PWA Install
+        window.addEventListener('beforeinstallprompt', (e) => {
+            e.preventDefault();
+            deferredPrompt = e;
+            showToast('Install app - Check browser menu');
+        });
+
+        window.addEventListener('appinstalled', () => {
+            console.log('PWA was installed');
+            deferredPrompt = null;
+        });
+
+        async function registerServiceWorker() {
+            if ('serviceWorker' in navigator) {
+                try {
+                    const registration = await navigator.serviceWorker.register('./sw.js');
+                    console.log('Service Worker registered:', registration);
+                } catch (error) {
+                    console.log('Service Worker registration failed:', error);
+                }
+            }
+        }
 
         async function initDB() { db = new Dexie("SmartAttendanceDB"); db.version(1).stores({ settings: 'id', students: 'id, class, roll, name', attendance: 'key, class, date' }); await db.open(); }
 
@@ -440,6 +471,7 @@
 
         document.addEventListener('DOMContentLoaded', async () => {
             await initDB();
+            registerServiceWorker();
             const d = new Date();
             document.getElementById('headerDate').innerText = formatDate(d);
             document.getElementById('dashSchoolName').innerText = SCHOOL_NAME;
